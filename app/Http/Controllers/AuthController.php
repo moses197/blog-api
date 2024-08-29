@@ -16,7 +16,7 @@ class AuthController extends Controller
         $formFields = $request->validate([
             'name' => 'required|string|max:225',
             'email' => 'required|email|unique:users',
-            'phone' => 'string',
+            'phone' => 'required|string',
             'password' => 'required|min:4'
         ]);
 
@@ -52,6 +52,11 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'Bearer'
         ]);
+    }
+
+    public function user(Request $request)
+    {
+        return $request->user();
     }
 
     public function logout(Request $request)

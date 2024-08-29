@@ -1,8 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
 use App\Models\Blog;
+use App\Models\User;
+use Illuminate\Http\Request;
 
 class BlogController extends Controller
 {
@@ -25,9 +26,29 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Blog $blog, User $user)
     {
-        //
+        // dd($user->id);
+        $commentField = $request->validate([
+            'comment' => 'required|string'
+        ]);
+
+        $commentField['user_id'] = $user->id;
+        
+        $comment = $blog->create($commentField);
+        // dd($comment);
+
+        // $comment = Blog::create([
+        //     'user_id' => $user->id,
+        //     'comment' => $request->input('comment')
+        // ]);
+
+        return response()->json([
+            'message' => 'comment created successfully',
+            'comment' => $comment
+        ]);
+
+
     }
 
     /**

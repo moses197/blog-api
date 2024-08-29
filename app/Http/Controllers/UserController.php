@@ -13,7 +13,11 @@ class UserController extends Controller
 
     public function index()
     {
-        return User::all();
+        $data = User::all();
+
+        return response()->json([
+            'data' => $data
+        ]);
     }
 
     public function update(Request $request, User $user)
