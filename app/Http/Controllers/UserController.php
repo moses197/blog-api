@@ -16,10 +16,30 @@ class UserController extends Controller
         return User::all();
     }
 
-    public function update(Request $request)
+    public function update(Request $request, User $user)
     {
         $formFields = $request->validate([
-            'name' => '',
+            'name' => 'string|max:225',
+            'email' => 'string|email|unique:users,email,' . $user->id,
+            'phone' => 'string',
+            'password' => 'string|min:4'
+        ]);
+
+        if($request->has('password')) {
+            $formFields['password'] = bcrypt($formFields['password']);
+        }
+
+        $user->update($formFields);
+
+        return response()->json($user);
+    }
+
+    public function delete_user(User $user)
+    {
+        $user->delete();
+        return response()->json([
+            'message' => 'deleted successfully',
+            204
         ]);
     }
 }
