@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -14,6 +15,9 @@ Route::get('/index', [UserController::class, 'index']);
 
 Route::post('/register', [AuthController::class, 'register_user']);
 Route::post('/login', [AuthController::class, 'user_login']);
+
+Route::post('/forget-password', [PasswordResetController::class, 'forgetPassword']);
+Route::post('/reset-password', [PasswordResetController::class, 'resetPassword']);
 
 Route::get('/user', [AuthController::class, 'user'])->middleware('auth:sanctum');
 
