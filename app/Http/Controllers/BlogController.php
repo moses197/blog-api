@@ -29,6 +29,7 @@ class BlogController extends Controller
     public function store(Request $request, Blog $blog, User $user)
     {
         // dd($user->id);
+    
         $commentField = $request->validate([
             'comment' => 'required|string'
         ]);
